@@ -1,0 +1,15 @@
+spring:
+  jpa:
+#    show-sql: true
+    hibernate:
+      ddl-auto: create
+  database:
+    postgres:
+      jdbcUrl: jdbc:h2:mem:sql_test_db
+      username: sa
+      password: password
+      driver-class-name: org.h2.Driver
+
+  mongodb:
+    embedded:
+      version: 4.4.9

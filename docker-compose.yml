@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: sa-db-comparer
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATABASE_POSTGRES_JDBCURL: jdbc:postgresql://postgres:5432/sql_test_db
+      SPRING_DATABASE_MONGO_JDBCURL: jdbc:mongodb://host.docker.internal:27017/nosql_test_db
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:14.5-alpine
+    container_name: postgres_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres_db_user
+      POSTGRES_PASSWORD: postgres_db_pw
+      POSTGRES_DB: sql_test_db
+      POSTGRES_HOST_AUTH_METHOD: trust
+  mongodb:
+    image: mongo:5.0
+    container_name: mongo_db
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/var/lib/mongo/data/
+#      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_db_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_db_pw
+      MONGO_INITDB_DATABASE: nosql_test_db
