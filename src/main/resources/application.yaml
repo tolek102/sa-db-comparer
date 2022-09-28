@@ -5,15 +5,15 @@ spring:
       ddl-auto: create
   database:
     postgres:
-#      host.docker.internal
       jdbcUrl: jdbc:postgresql://localhost:5432/sql_test_db
       username: postgres_db_user
       password: postgres_db_pw
       driver-class-name: org.postgresql.Driver
-    mongo:
-#      jdbcUrl: jdbc:mongodb://localhost:27017/nosql_test_db?authSource=admin
-      jdbcUrl: jdbc:mongodb://localhost:27017/nosql_test_db
-      username: admin
-      password: admin
+  data:
+    mongodb:
+      host: host.docker.internal
+      port: 27017
+      database: nosql_test_db
+      username: mongo_db_user
+      password: mongo_db_pw
       authentication-database: admin
-#      driver-class-name: com.mysql.cj.jdbc.Driver

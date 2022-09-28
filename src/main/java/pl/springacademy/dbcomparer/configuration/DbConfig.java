@@ -19,10 +19,8 @@ public class DbConfig {
     }
 
     @Bean(name = "mongo_db")
-    @ConfigurationProperties("spring.database.mongo")
+    @ConfigurationProperties("spring.data.mongodb")
     public DataSource mongoDataSource(){
         return DataSourceBuilder.create().build();
     }
-
-
 }
