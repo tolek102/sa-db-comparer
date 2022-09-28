@@ -13,7 +13,7 @@ import pl.springacademy.dbcomparer.model.User;
 
 @Slf4j
 @Component
-public class MainService {
+public class DbOperationService {
 
     @Autowired
     @Qualifier("mongo_db")
@@ -29,12 +29,19 @@ public class MainService {
 
         final List<User> usersFromCsv = DataProvider.getUsersFromCsv();
 
-        mongoDbOperation.save(usersFromCsv);
-        final List<User> mongoUsers = mongoDbOperation.readAll();
-        mongoDbOperation.deleteAll();
+        int counter = 1;
+        do {
+            log.info("run no: " + counter);
+            mongoDbOperation.save(usersFromCsv);
+            mongoDbOperation.readAll();
+            mongoDbOperation.deleteAll();
 
-        postgresDbOperation.save(usersFromCsv);
-        final List<User> postgresUsers = postgresDbOperation.readAll();
-        postgresDbOperation.deleteAll();
+            postgresDbOperation.save(usersFromCsv);
+            postgresDbOperation.readAll();
+            postgresDbOperation.deleteAll();
+            counter++;
+        } while (counter<=5);
+
+        log.info("\n STOP PROCESSING \n");
     }
 }

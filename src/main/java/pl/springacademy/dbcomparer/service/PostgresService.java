@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.springacademy.dbcomparer.aspect.Timed;
+import pl.springacademy.dbcomparer.aspect.Stopwatch;
 import pl.springacademy.dbcomparer.model.User;
 import pl.springacademy.dbcomparer.repository.PostgresRepository;
 import pl.springacademy.dbcomparer.service.model.PostgresUser;
@@ -21,7 +21,7 @@ public class PostgresService implements DbOperation{
 
     private final PostgresRepository repository;
 
-    @Timed
+    @Stopwatch
     @Override
     public void save(final List<User> users) {
         final List<PostgresUser> postgresUsers = users.stream()
@@ -29,7 +29,7 @@ public class PostgresService implements DbOperation{
                 .collect(Collectors.toList());
         repository.saveAll(postgresUsers);
     }
-    @Timed
+    @Stopwatch
     @Override
     public List<User> readAll() {
         final List<PostgresUser> postgresUsers = repository.findAll();
@@ -38,7 +38,7 @@ public class PostgresService implements DbOperation{
                 .collect(Collectors.toList());
     }
 
-    @Timed
+    @Stopwatch
     @Override
     public void deleteAll() {
         repository.deleteAll();

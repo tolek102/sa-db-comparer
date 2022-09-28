@@ -23,14 +23,12 @@ public class DataProvider {
     private static final String FILE = "TEST_DATA.csv";
 
     public static List<User> getUsersFromCsv() {
-        log.info("\n Getting Data From File \n");
         final InputStream input;
         try {
             input = new ClassPathResource(FILE).getInputStream();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
         try (final InputStreamReader inputStreamReader = new InputStreamReader(input, StandardCharsets.UTF_8);
              final CSVParser csvParser = new CSVParser(inputStreamReader,
                 CSVFormat.Builder.create()

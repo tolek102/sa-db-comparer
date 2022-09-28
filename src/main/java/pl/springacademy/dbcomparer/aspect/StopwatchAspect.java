@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Configuration
 @RequiredArgsConstructor
-public class TimedAspect {
+public class StopwatchAspect {
 
-    @Around(value = "@annotation(pl.springacademy.dbcomparer.aspect.Timed)")
+    @Around(value = "@annotation(pl.springacademy.dbcomparer.aspect.Stopwatch)")
     public Object countExecutionTime(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 
@@ -28,7 +28,7 @@ public class TimedAspect {
         final Object result = proceedingJoinPoint.proceed();
         stopWatch.stop();
         if (log.isInfoEnabled()) {
-            log.info(stopWatch.prettyPrint());
+            log.info(stopWatch.toString());
         }
         return result;
     }
